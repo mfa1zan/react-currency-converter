@@ -1,25 +1,65 @@
-import logo from './logo.svg';
-import './App.css';
+// `https://api.frankfurter.app/latest?amount=100&from=EUR&to=USD`
 
-function App() {
+import { useEffect, useState } from "react";
+
+export default function App() {
+  const [output, setOutput] = useState(1);
+  const [amount, setAmount] = useState(1);
+  const [fromCurrency, setFromCurrency] = useState("EUR");
+  const [toCurrency, setToCurrency] = useState("USD");
+
+  // function handleFromCurrency(e) {
+  //   console.log(fromCurrency);
+  //   setFromCurrency(e);
+  // }
+  // function handleToCurrency(e) {
+  //   console.log(toCurrency);
+  //   setToCurrency(e);
+  // }
+
+  useEffect(
+    function () {
+      async function convertedCurrency() {
+        const result = await fetch(
+          `https://api.frankfurter.app/latest?amount=${amount}&from=${fromCurrency}&to=${toCurrency}`
+        );
+        const data = await result.json();
+        setOutput(data.rates[toCurrency]);
+        console.log(output);
+      }
+      convertedCurrency();
+    },
+    [amount, fromCurrency, toCurrency]
+  );
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <input
+        type="text"
+        value={amount}
+        onChange={(e) => setAmount(Number(e.target.value))}
+      />
+      <select
+        value={fromCurrency}
+        onChange={(e) => setFromCurrency(e.target.value)}
+      >
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="CAD">CAD</option>
+        <option value="INR">INR</option>
+      </select>
+      <select
+        value={toCurrency}
+        onChange={(e) => setToCurrency(e.target.value)}
+      >
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="CAD">CAD</option>
+        <option value="INR">INR</option>
+      </select>
+      <p>
+        {output} {toCurrency}
+      </p>
     </div>
   );
 }
-
-export default App;
