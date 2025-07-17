@@ -50,6 +50,7 @@ export default function App() {
         disabled={isLoading}
       >
         <option value="USD">USD</option>
+        {/* <option value="PKR">PKR</option> */}
         <option value="EUR">EUR</option>
         <option value="CAD">CAD</option>
         <option value="INR">INR</option>
@@ -60,6 +61,7 @@ export default function App() {
         disabled={isLoading}
       >
         <option value="USD">USD</option>
+        {/* <option value="PKR">PKR</option> */}
         <option value="EUR">EUR</option>
         <option value="CAD">CAD</option>
         <option value="INR">INR</option>
